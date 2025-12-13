@@ -1,3 +1,73 @@
 <resources>
-    <string name="app_name">Recipe-manager</string>
+    <string name="app_name">Менеджер Рецептів</string>
+
+    <!-- Menu -->
+    <string name="menu_search">Пошук</string>
+    <string name="menu_add">Додати рецепт</string>
+    <string name="menu_sort">Сортувати</string>
+
+    <!-- Main Activity -->
+    <string name="no_recipes">Немає рецептів. Додайте свій перший рецепт!</string>
+    <string name="recipe_deleted">Рецепт видалено</string>
+
+    <!-- Add/Edit Recipe -->
+    <string name="add_recipe_title">Додати рецепт</string>
+    <string name="edit_recipe_title">Редагувати рецепт</string>
+    <string name="recipe_name">Назва рецепту</string>
+    <string name="recipe_name_hint">Введіть назву</string>
+    <string name="ingredients">Інгредієнти</string>
+    <string name="ingredients_hint">Введіть інгредієнти (кожен з нового рядка)</string>
+    <string name="difficulty">Складність</string>
+    <string name="cooking_time">Час приготування (хв)</string>
+    <string name="cooking_time_hint">60</string>
+    <string name="instructions">Інструкція приготування</string>
+    <string name="instructions_hint">Опишіть процес приготування</string>
+    <string name="save">Зберегти</string>
+    <string name="cancel">Скасувати</string>
+
+    <!-- Difficulty levels -->
+    <string name="difficulty_easy">Легкий</string>
+    <string name="difficulty_medium">Середній</string>
+    <string name="difficulty_hard">Складний</string>
+
+    <!-- Recipe Detail -->
+    <string name="ingredients_title">Інгредієнти:</string>
+    <string name="instructions_title">Приготування:</string>
+    <string name="time_label">Час:</string>
+    <string name="difficulty_label">Складність:</string>
+    <string name="minutes">хв</string>
+    <string name="edit">Редагувати</string>
+    <string name="delete">Видалити</string>
+
+    <!-- Search -->
+    <string name="search_title">Пошук рецептів</string>
+    <string name="search_hint">Введіть назву, інгредієнт або складність</string>
+    <string name="search">Шукати</string>
+    <string name="no_results">Нічого не знайдено</string>
+    <string name="search_by_name">Пошук за назвою (точний)</string>
+    <string name="search_by_ingredients">Пошук за інгредієнтами</string>
+    <string name="search_complex">Комплексний пошук</string>
+
+    <!-- Sort -->
+    <string name="sort_by">Сортувати за:</string>
+    <string name="sort_by_name">За назвою</string>
+    <string name="sort_by_time">За часом</string>
+    <string name="sort_by_difficulty">За складністю</string>
+    <string name="sort_by_date">За датою додавання</string>
+
+    <!-- Validation -->
+    <string name="error_empty_name">Введіть назву рецепту</string>
+    <string name="error_empty_ingredients">Додайте хоча б один інгредієнт</string>
+    <string name="error_empty_instructions">Додайте інструкцію приготування</string>
+    <string name="error_invalid_time">Введіть коректний час</string>
+
+    <!-- Dialogs -->
+    <string name="delete_recipe_title">Видалити рецепт?</string>
+    <string name="delete_recipe_message">Ця дія незворотна</string>
+    <string name="yes">Так</string>
+    <string name="no">Ні</string>
+
+    <!-- Success messages -->
+    <string name="recipe_added">Рецепт додано</string>
+    <string name="recipe_updated">Рецепт оновлено</string>
 </resources>

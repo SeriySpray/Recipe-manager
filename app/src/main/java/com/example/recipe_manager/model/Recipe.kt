@@ -1,0 +1,42 @@
+package com.example.recipe_manager.model
+
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+import androidx.room.TypeConverter
+import androidx.room.TypeConverters
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
+
+@Entity(tableName = "recipes")
+@TypeConverters(Converters::class)
+data class Recipe(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
+    val name: String,
+    val ingredients: List<String>,
+    val difficulty: String, // "Легкий", "Середній", "Складний"
+    val cookingTime: Int, // час у хвилинах
+    val instructions: String,
+    val dateCreated: Long = System.currentTimeMillis()
+) {
+    companion object {
+        const val DIFFICULTY_EASY = "Легкий"
+        const val DIFFICULTY_MEDIUM = "Середній"
+        const val DIFFICULTY_HARD = "Складний"
+    }
+}
+
+class Converters {
+    private val gson = Gson()
+
+    @TypeConverter
+    fun fromIngredientsList(value: List<String>): String {
+        return gson.toJson(value)
+    }
+
+    @TypeConverter
+    fun toIngredientsList(value: String): List<String> {
+        val listType = object : TypeToken<List<String>>() {}.type
+        return gson.fromJson(value, listType)
+    }
+}
