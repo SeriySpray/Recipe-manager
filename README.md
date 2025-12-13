@@ -1,140 +1,221 @@
-📁 Структура файлів та папок
-RecipeManager/
+# 📱 Менеджер Рецептів - Recipe Manager
+
+Мобільний додаток для Android на мові Kotlin для зберігання та пошуку рецептів з імплементацією базових алгоритмів пошуку та сортування.
+
+## 🎯 Основний функціонал
+
+- ✅ Додавання власних рецептів з параметрами (назва, інгредієнти, складність, час, інструкція)
+- 🔍 Пошук рецептів за назвою, інгредієнтами або складністю
+- 📊 Сортування рецептів за різними критеріями
+- ✏️ Редагування існуючих рецептів
+- 🗑️ Видалення рецептів
+- 💾 Локальне зберігання даних (Room Database)
+
+## 🧮 Імплементовані алгоритми
+
+### 1. **Лінійний пошук** (`SearchAlgorithms.kt`)
+- **Місце використання**: Пошук рецептів за інгредієнтами
+- **Функція**: `linearSearchByIngredients()`
+- **Складність**: O(n)
+- **Обгрунтування**: Необхідний для пошуку часткових збігів, коли один рецепт може містити кілька інгредієнтів
+
+```kotlin
+// Приклад: пошук рецептів що містять "морква"
+viewModel.searchByIngredients(recipes, "морква")
+```
+
+### 2. **Бінарний пошук** (`SearchAlgorithms.kt`)
+- **Місце використання**: Пошук рецепту за точною назвою
+- **Функція**: `binarySearchByName()`
+- **Складність**: O(log n)
+- **Обгрунтування**: Ефективний для швидкого пошуку в відсортованому списку назв
+
+```kotlin
+// Приклад: точний пошук рецепту "Борщ"
+viewModel.searchByNameBinary(recipes, "Борщ")
+```
+
+### 3. **Швидке сортування - QuickSort** (`SortingAlgorithms.kt`)
+- **Місце використання**: Сортування рецептів за різними критеріями
+- **Функції**: 
+  - `quickSortByName()` - за алфавітом
+  - `quickSortByTime()` - за часом приготування
+  - `quickSortByDifficulty()` - за складністю
+  - `quickSortByDate()` - за датою додавання
+- **Складність**: Середня O(n log n)
+- **Обгрунтування**: Ефективний алгоритм сортування, необхідний для підготовки даних до бінарного пошуку
+
+```kotlin
+// Приклад: сортування за часом
+viewModel.sortByTime(recipes)
+```
+
+## 📂 Структура проекту
+
+```
+app/src/main/java/com/example/recipe_manager/
 │
-├── app/
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/example/recipemanager/
-│   │   │   │   │
-│   │   │   │   ├── model/
-│   │   │   │   │   └── Recipe.kt              // Модель рецепту
-│   │   │   │   │
-│   │   │   │   ├── data/
-│   │   │   │   │   ├── RecipeRepository.kt    // Репозиторій для роботи з даними
-│   │   │   │   │   └── RecipeDatabase.kt      // Room Database
-│   │   │   │   │
-│   │   │   │   ├── algorithms/
-│   │   │   │   │   ├── SearchAlgorithms.kt    // Лінійний і бінарний пошук
-│   │   │   │   │   └── SortingAlgorithms.kt   // Швидке сортування
-│   │   │   │   │
-│   │   │   │   ├── ui/
-│   │   │   │   │   ├── main/
-│   │   │   │   │   │   ├── MainActivity.kt
-│   │   │   │   │   │   └── RecipeAdapter.kt   // Adapter для RecyclerView
-│   │   │   │   │   │
-│   │   │   │   │   ├── add/
-│   │   │   │   │   │   └── AddRecipeActivity.kt
-│   │   │   │   │   │
-│   │   │   │   │   ├── edit/
-│   │   │   │   │   │   └── EditRecipeActivity.kt
-│   │   │   │   │   │
-│   │   │   │   │   ├── search/
-│   │   │   │   │   │   └── SearchActivity.kt
-│   │   │   │   │   │
-│   │   │   │   │   └── detail/
-│   │   │   │   │       └── RecipeDetailActivity.kt
-│   │   │   │   │
-│   │   │   │   └── viewmodel/
-│   │   │   │       └── RecipeViewModel.kt     // ViewModel для MVVM
-│   │   │   │
-│   │   │   ├── res/
-│   │   │   │   ├── layout/
-│   │   │   │   │   ├── activity_main.xml
-│   │   │   │   │   ├── activity_add_recipe.xml
-│   │   │   │   │   ├── activity_edit_recipe.xml
-│   │   │   │   │   ├── activity_search.xml
-│   │   │   │   │   ├── activity_recipe_detail.xml
-│   │   │   │   │   └── item_recipe.xml        // Layout для одного рецепту
-│   │   │   │   │
-│   │   │   │   ├── drawable/
-│   │   │   │   │   ├── ic_add.xml
-│   │   │   │   │   ├── ic_search.xml
-│   │   │   │   │   ├── ic_edit.xml
-│   │   │   │   │   └── ic_delete.xml
-│   │   │   │   │
-│   │   │   │   ├── values/
-│   │   │   │   │   ├── colors.xml
-│   │   │   │   │   ├── strings.xml
-│   │   │   │   │   └── themes.xml
-│   │   │   │   │
-│   │   │   │   └── menu/
-│   │   │   │       └── main_menu.xml
-│   │   │   │
-│   │   │   └── AndroidManifest.xml
-│   │   │
-│   │   └── build.gradle (Module: app)
+├── model/
+│   └── Recipe.kt                  // Модель даних рецепту
+│
+├── data/
+│   ├── RecipeDatabase.kt          // Room Database + DAO
+│   └── RecipeRepository.kt        // Репозиторій для роботи з даними
+│
+├── algorithms/
+│   ├── SearchAlgorithms.kt        // Лінійний і бінарний пошук
+│   └── SortingAlgorithms.kt       // Швидке сортування (QuickSort)
+│
+├── ui/
+│   ├── main/
+│   │   ├── MainActivity.kt        // Головний екран зі списком рецептів
+│   │   └── RecipeAdapter.kt       // Адаптер для RecyclerView
 │   │
-│   └── build.gradle (Project)
+│   ├── add/
+│   │   └── AddRecipeActivity.kt   // Додавання нового рецепту
+│   │
+│   ├── edit/
+│   │   └── EditRecipeActivity.kt  // Редагування рецепту
+│   │
+│   ├── search/
+│   │   └── SearchActivity.kt      // Пошук рецептів
+│   │
+│   └── detail/
+│       └── RecipeDetailActivity.kt // Детальний перегляд рецепту
 │
-└── gradle.properties
-🎯 Призначення алгоритмів у програмі
-1. Лінійний пошук (SearchAlgorithms.kt)
+└── viewmodel/
+    └── RecipeViewModel.kt         // ViewModel для MVVM архітектури
+```
 
-Використання: Пошук рецептів за інгредієнтами
-Причина: Потрібно перевіряти часткові збіги (рецепт може містити кілька інгредієнтів)
+## 🚀 Інструкції по запуску
 
-2. Бінарний пошук (SearchAlgorithms.kt)
+### Крок 1: Підготовка середовища
+1. Встановіть Android Studio (Arctic Fox або новіше)
+2. Встановіть Android SDK (мінімум API 24)
 
-Використання: Пошук рецепту за точною назвою
-Причина: Ефективний для відсортованого списку назв
+### Крок 2: Відкриття проекту
+1. Відкрийте Android Studio
+2. File → Open → виберіть папку проекту
+3. Дочекайтесь синхронізації Gradle
 
-3. Швидке сортування (SortingAlgorithms.kt)
+### Крок 3: Збірка проекту
+1. Build → Make Project (або Ctrl+F9)
+2. Дочекайтесь завершення збірки
 
-Використання: Сортування рецептів за:
+### Крок 4: Запуск
+- **На емуляторі**:
+  1. Tools → AVD Manager → Create Virtual Device
+  2. Виберіть пристрій (Pixel 5 рекомендовано)
+  3. Натисніть Run (або Shift+F10)
 
-Часом приготування (від меншого до більшого)
-Складністю (легкі → середні → складні)
-Алфавітним порядком назв
+- **На реальному пристрої**:
+  1. Увімкніть режим розробника на телефоні
+  2. Підключіть через USB
+  3. Натисніть Run
 
+## 🎨 Дизайн
 
-Причина: Необхідне для бінарного пошуку та зручного перегляду
+Додаток використовує темну тему з мінімалістичним дизайном:
+- **Основні кольори**: Чорний (#000000), Білий (#FFFFFF)
+- **Додаткові**: Темно-сірий (#1E1E1E), Світло-сірий (#2D2D2D)
+- **Акценти для складності**:
+  - Легкий: Зелений (#4CAF50)
+  - Середній: Помаранчевий (#FF9800)
+  - Складний: Червоний (#F44336)
 
-📦 Залежності для build.gradle
-kotlindependencies {
-    // Core
-    implementation("androidx.core:core-ktx:1.12.0")
-    implementation("androidx.appcompat:appcompat:1.6.1")
-    implementation("com.google.android.material:material:1.11.0")
-    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
-    
-    // Room Database
-    implementation("androidx.room:room-runtime:2.6.1")
-    implementation("androidx.room:room-ktx:2.6.1")
-    kapt("androidx.room:room-compiler:2.6.1")
-    
-    // ViewModel and LiveData
-    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
-    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
-    
-    // RecyclerView
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
-    
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
-}
-🎨 Основна структура даних
-Recipe.kt матиме наступні поля:
+## 📱 Використання додатку
 
-id: Long - унікальний ідентифікатор
-name: String - назва рецепту
-ingredients: List<String> - список інгредієнтів
-difficulty: String - складність (Легкий/Середній/Складний)
-cookingTime: Int - час приготування (хвилини)
-instructions: String - опис приготування
-dateCreated: Long - дата створення
+### Додавання рецепту
+1. Натисніть FAB (+) або меню → "Додати рецепт"
+2. Заповніть форму:
+   - Назва рецепту
+   - Інгредієнти (кожен з нового рядка)
+   - Складність (Легкий/Середній/Складний)
+   - Час приготування (хвилини)
+   - Інструкція приготування
+3. Натисніть "Зберегти"
 
-🔄 Workflow додатку
+### Пошук рецептів
+1. Натисніть іконку пошуку в меню
+2. Виберіть тип пошуку:
+   - **Комплексний пошук** - шукає в усіх полях (використовує лінійний пошук)
+   - **Пошук за назвою** - точний пошук (використовує бінарний пошук)
+   - **Пошук за інгредієнтами** - часткові збіги (використовує лінійний пошук)
+3. Введіть запит і натисніть Enter
 
-MainActivity → показує список рецептів (RecyclerView)
-Menu → пункти: Додати рецепт, Пошук, Сортування
-AddRecipeActivity → додавання нового рецепту
-SearchActivity → пошук (використовує лінійний/бінарний пошук)
-EditRecipeActivity → редагування рецепту
-RecipeDetailActivity → детальний перегляд рецепту
+### Сортування рецептів
+1. В головному меню виберіть "Сортувати"
+2. Оберіть критерій:
+   - За назвою (алфавітний порядок)
+   - За часом (від меншого до більшого)
+   - За складністю (Легкий → Середній → Складний)
+   - За датою додавання (новіші спочатку)
 
-🎨 Кольорова схема (themes.xml)
-xml<color name="black">#000000</color>
-<color name="white">#FFFFFF</color>
-<color name="dark_gray">#1E1E1E</color>
-<color name="light_gray">#2D2D2D</color>
-<color name="accent">#FFFFFF</color>
+### Редагування рецепту
+1. Відкрийте рецепт
+2. Натисніть "Редагувати"
+3. Змініть потрібні поля
+4. Натисніть "Зберегти"
+
+### Видалення рецепту
+1. Відкрийте рецепт
+2. Натисніть "Видалити"
+3. Підтвердьте дію
+
+## 🛠️ Технології
+
+- **Мова**: Kotlin 2.0.21
+- **Мінімальний SDK**: 24 (Android 7.0)
+- **Цільовий SDK**: 36
+- **Архітектура**: MVVM (Model-View-ViewModel)
+- **База даних**: Room (SQLite)
+- **Асинхронність**: Kotlin Coroutines
+- **UI**: Material Design 3, RecyclerView, ConstraintLayout
+
+## 📦 Залежності
+
+```kotlin
+// Room Database
+implementation("androidx.room:room-runtime:2.6.1")
+implementation("androidx.room:room-ktx:2.6.1")
+kapt("androidx.room:room-compiler:2.6.1")
+
+// ViewModel and LiveData
+implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0")
+implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+
+// Coroutines
+implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
+// Gson для конвертації
+implementation("com.google.code.gson:gson:2.10.1")
+```
+
+## 🧪 Тестування алгоритмів
+
+Для перевірки коректності роботи алгоритмів:
+
+1. Додайте кілька тестових рецептів
+2. Перевірте лінійний пошук: введіть назву інгредієнта
+3. Перевірте бінарний пошук: введіть точну назву рецепту
+4. Перевірте сортування: відсортуйте за різними критеріями
+
+## 📝 Примітки
+
+- Всі дані зберігаються локально в базі даних Room
+- При видаленні додатку всі дані буде втрачено
+- Рекомендується додавати інгредієнти кожен з нового рядка
+- Час приготування вказується в хвилинах
+
+## 👨‍💻 Розробка
+
+Проект створено як навчальний для демонстрації:
+- Базових алгоритмів пошуку та сортування
+- Роботи з Room Database
+- MVVM архітектури
+- Material Design Guidelines
+
+---
+
+**Версія**: 1.0  
+**Дата**: Грудень 2025
