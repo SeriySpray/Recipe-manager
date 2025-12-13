@@ -1,172 +1,76 @@
-package com.example.recipe_manager.algorithms
+package com.example.recipe_manager.data
 
+import android.content.Context
+import androidx.room.Database
+import androidx.room.Room
+import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import androidx.room.Dao
+import androidx.room.Query
+import androidx.room.Insert
+import androidx.room.Update
+import androidx.room.Delete
+import androidx.room.OnConflictStrategy
+import com.example.recipe_manager.model.Converters
 import com.example.recipe_manager.model.Recipe
+import kotlinx.coroutines.flow.Flow
 
-object SortingAlgorithms {
+@Database(entities = [Recipe::class], version = 1, exportSchema = false)
+@TypeConverters(Converters::class)
+abstract class RecipeDatabase : RoomDatabase() {
 
-    /**
-     * Швидке сортування (QuickSort) - основний алгоритм сортування
-     * Складність: середня O(n log n), найгірша O(n²)
-     */
+    abstract fun recipeDao(): RecipeDao
 
-    /**
-     * Сортування рецептів за назвою (алфавітний порядок)
-     */
-    fun quickSortByName(recipes: MutableList<Recipe>, low: Int = 0, high: Int = recipes.size - 1) {
-        if (low < high) {
-            val pivotIndex = partitionByName(recipes, low, high)
-            quickSortByName(recipes, low, pivotIndex - 1)
-            quickSortByName(recipes, pivotIndex + 1, high)
-        }
-    }
+    companion object {
+        @Volatile
+        private var INSTANCE: RecipeDatabase? = null
 
-    private fun partitionByName(recipes: MutableList<Recipe>, low: Int, high: Int): Int {
-        val pivot = recipes[high].name.lowercase()
-        var i = low - 1
-
-        for (j in low until high) {
-            if (recipes[j].name.lowercase() <= pivot) {
-                i++
-                // Обмін елементів
-                val temp = recipes[i]
-                recipes[i] = recipes[j]
-                recipes[j] = temp
+        fun getDatabase(context: Context): RecipeDatabase {
+            return INSTANCE ?: synchronized(this) {
+                val instance = Room.databaseBuilder(
+                    context.applicationContext,
+                    RecipeDatabase::class.java,
+                    "recipe_database"
+                )
+                    .fallbackToDestructiveMigration()
+                    .build()
+                INSTANCE = instance
+                instance
             }
         }
-
-        // Обмін pivot елементу
-        val temp = recipes[i + 1]
-        recipes[i + 1] = recipes[high]
-        recipes[high] = temp
-
-        return i + 1
     }
+}
 
-    /**
-     * Сортування рецептів за часом приготування (від меншого до більшого)
-     */
-    fun quickSortByTime(recipes: MutableList<Recipe>, low: Int = 0, high: Int = recipes.size - 1) {
-        if (low < high) {
-            val pivotIndex = partitionByTime(recipes, low, high)
-            quickSortByTime(recipes, low, pivotIndex - 1)
-            quickSortByTime(recipes, pivotIndex + 1, high)
-        }
-    }
+@Dao
+interface RecipeDao {
 
-    private fun partitionByTime(recipes: MutableList<Recipe>, low: Int, high: Int): Int {
-        val pivot = recipes[high].cookingTime
-        var i = low - 1
+    @Query("SELECT * FROM recipes ORDER BY dateCreated DESC")
+    fun getAllRecipes(): Flow<List<Recipe>>
 
-        for (j in low until high) {
-            if (recipes[j].cookingTime <= pivot) {
-                i++
-                val temp = recipes[i]
-                recipes[i] = recipes[j]
-                recipes[j] = temp
-            }
-        }
+    @Query("SELECT * FROM recipes WHERE id = :id")
+    suspend fun getRecipeById(id: Long): Recipe?
 
-        val temp = recipes[i + 1]
-        recipes[i + 1] = recipes[high]
-        recipes[high] = temp
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(recipe: Recipe): Long
 
-        return i + 1
-    }
+    @Update
+    suspend fun update(recipe: Recipe)
 
-    /**
-     * Сортування рецептів за складністю (Легкий -> Середній -> Складний)
-     */
-    fun quickSortByDifficulty(recipes: MutableList<Recipe>, low: Int = 0, high: Int = recipes.size - 1) {
-        if (low < high) {
-            val pivotIndex = partitionByDifficulty(recipes, low, high)
-            quickSortByDifficulty(recipes, low, pivotIndex - 1)
-            quickSortByDifficulty(recipes, pivotIndex + 1, high)
-        }
-    }
+    @Delete
+    suspend fun delete(recipe: Recipe)
 
-    private fun partitionByDifficulty(recipes: MutableList<Recipe>, low: Int, high: Int): Int {
-        val pivot = getDifficultyLevel(recipes[high].difficulty)
-        var i = low - 1
+    @Query("DELETE FROM recipes")
+    suspend fun deleteAll()
 
-        for (j in low until high) {
-            if (getDifficultyLevel(recipes[j].difficulty) <= pivot) {
-                i++
-                val temp = recipes[i]
-                recipes[i] = recipes[j]
-                recipes[j] = temp
-            }
-        }
+    @Query("SELECT * FROM recipes WHERE name LIKE '%' || :searchQuery || '%'")
+    fun searchByName(searchQuery: String): Flow<List<Recipe>>
 
-        val temp = recipes[i + 1]
-        recipes[i + 1] = recipes[high]
-        recipes[high] = temp
+    @Query("SELECT * FROM recipes WHERE difficulty = :difficulty")
+    fun filterByDifficulty(difficulty: String): Flow<List<Recipe>>
 
-        return i + 1
-    }
+    @Query("SELECT * FROM recipes ORDER BY cookingTime ASC")
+    fun getAllRecipesSortedByTime(): Flow<List<Recipe>>
 
-    /**
-     * Конвертує складність у числове значення для порівняння
-     */
-    private fun getDifficultyLevel(difficulty: String): Int {
-        return when (difficulty) {
-            Recipe.DIFFICULTY_EASY -> 1
-            Recipe.DIFFICULTY_MEDIUM -> 2
-            Recipe.DIFFICULTY_HARD -> 3
-            else -> 0
-        }
-    }
-
-    /**
-     * Сортування за датою створення (від новіших до старіших)
-     */
-    fun quickSortByDate(recipes: MutableList<Recipe>, low: Int = 0, high: Int = recipes.size - 1) {
-        if (low < high) {
-            val pivotIndex = partitionByDate(recipes, low, high)
-            quickSortByDate(recipes, low, pivotIndex - 1)
-            quickSortByDate(recipes, pivotIndex + 1, high)
-        }
-    }
-
-    private fun partitionByDate(recipes: MutableList<Recipe>, low: Int, high: Int): Int {
-        val pivot = recipes[high].dateCreated
-        var i = low - 1
-
-        for (j in low until high) {
-            // Сортуємо у зворотному порядку (новіші спочатку)
-            if (recipes[j].dateCreated >= pivot) {
-                i++
-                val temp = recipes[i]
-                recipes[i] = recipes[j]
-                recipes[j] = temp
-            }
-        }
-
-        val temp = recipes[i + 1]
-        recipes[i + 1] = recipes[high]
-        recipes[high] = temp
-
-        return i + 1
-    }
-
-    /**
-     * Enum для типів сортування
-     */
-    enum class SortType {
-        NAME,
-        TIME,
-        DIFFICULTY,
-        DATE
-    }
-
-    /**
-     * Універсальна функція сортування
-     */
-    fun sortRecipes(recipes: MutableList<Recipe>, sortType: SortType) {
-        when (sortType) {
-            SortType.NAME -> quickSortByName(recipes)
-            SortType.TIME -> quickSortByTime(recipes)
-            SortType.DIFFICULTY -> quickSortByDifficulty(recipes)
-            SortType.DATE -> quickSortByDate(recipes)
-        }
-    }
+    @Query("SELECT * FROM recipes ORDER BY name ASC")
+    fun getAllRecipesSortedByName(): Flow<List<Recipe>>
 }

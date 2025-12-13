@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.asLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.recipe_manager.algorithms.SearchAlgorithms
+import com.example.recipe_manager.algorithms.SortingAlgorithms
 import com.example.recipe_manager.data.RecipeDatabase
 import com.example.recipe_manager.data.RecipeRepository
 import com.example.recipe_manager.model.Recipe

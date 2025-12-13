@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipe_manager.R
+import com.example.recipe_manager.algorithms.SortingAlgorithms
 import com.example.recipe_manager.model.Recipe
 import com.example.recipe_manager.ui.add.AddRecipeActivity
 import com.example.recipe_manager.ui.detail.RecipeDetailActivity
