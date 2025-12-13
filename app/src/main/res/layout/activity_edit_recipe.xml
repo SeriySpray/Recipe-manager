@@ -24,11 +24,11 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/nameEditText"
+                style="@style/CustomEditTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textCapSentences"
-                android:maxLines="2"
-                android:textColor="@color/text_primary" />
+                android:maxLines="2" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -38,20 +38,19 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="@string/ingredients"
+            android:hint="@string/ingredients_hint"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/nameInputLayout">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/ingredientsEditText"
+                style="@style/CustomEditTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
-                android:hint="@string/ingredients_hint"
                 android:inputType="textMultiLine|textCapSentences"
-                android:minLines="4"
-                android:textColor="@color/text_primary" />
+                android:minLines="4" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -119,11 +118,10 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/timeEditText"
+                style="@style/CustomEditTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/cooking_time_hint"
-                android:inputType="number"
-                android:textColor="@color/text_primary" />
+                android:inputType="number" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -140,13 +138,12 @@
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/instructionsEditText"
+                style="@style/CustomEditTextInput"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="top"
-                android:hint="@string/instructions_hint"
                 android:inputType="textMultiLine|textCapSentences"
-                android:minLines="6"
-                android:textColor="@color/text_primary" />
+                android:minLines="6" />
 
         </com.google.android.material.textfield.TextInputLayout>
 

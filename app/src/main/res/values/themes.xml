@@ -25,6 +25,9 @@
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
 
+        <!-- Cursor color (for older Android versions) -->
+        <item name="colorControlActivated">@color/white</item>
+
         <!-- Action bar -->
         <item name="actionBarStyle">@style/CustomActionBar</item>
     </style>
@@ -62,6 +65,12 @@
         <item name="boxStrokeColor">@color/white</item>
         <item name="hintTextColor">@color/text_secondary</item>
         <item name="android:textColorHint">@color/text_secondary</item>
+    </style>
+
+    <!-- EditText with white cursor -->
+    <style name="CustomEditTextInput">
+        <item name="android:textCursorDrawable">@null</item>
+        <item name="android:textColor">@color/text_primary</item>
     </style>
 
     <!-- Card style -->

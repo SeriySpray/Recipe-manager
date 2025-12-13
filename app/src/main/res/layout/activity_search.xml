@@ -23,11 +23,11 @@
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/searchEditText"
+            style="@style/CustomEditTextInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:imeOptions="actionSearch"
-            android:inputType="text"
-            android:textColor="@color/text_primary" />
+            android:inputType="text" />
 
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -49,8 +49,8 @@
             android:layout_height="wrap_content"
             android:text="@string/search_complex"
             android:checked="true"
-            android:textColor="@color/white"
-            app:chipBackgroundColor="@color/medium_gray" />
+            android:textColor="@color/chip_text_color_selector"
+            app:chipBackgroundColor="@color/chip_background_selector" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipSearchName"
@@ -58,8 +58,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search_by_name"
-            android:textColor="@color/white"
-            app:chipBackgroundColor="@color/medium_gray" />
+            android:textColor="@color/chip_text_color_selector"
+            app:chipBackgroundColor="@color/chip_background_selector" />
 
         <com.google.android.material.chip.Chip
             android:id="@+id/chipSearchIngredients"
@@ -67,8 +67,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/search_by_ingredients"
-            android:textColor="@color/white"
-            app:chipBackgroundColor="@color/medium_gray" />
+            android:textColor="@color/chip_text_color_selector"
+            app:chipBackgroundColor="@color/chip_background_selector" />
 
     </com.google.android.material.chip.ChipGroup>
 
