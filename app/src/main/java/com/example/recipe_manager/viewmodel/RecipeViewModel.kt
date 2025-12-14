@@ -67,8 +67,8 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
         sortRecipes(recipes, SortingAlgorithms.SortType.NAME)
     }
 
-    fun sortByTime(recipes: List<Recipe>) {
-        sortRecipes(recipes, SortingAlgorithms.SortType.TIME)
+    fun sortByTimeAsc(recipes: List<Recipe>) {
+        sortRecipes(recipes, SortingAlgorithms.SortType.TIME_ASC)
     }
 
     fun sortByDifficulty(recipes: List<Recipe>) {
@@ -83,6 +83,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     /**
      * Комплексний пошук (використовує лінійний пошук)
+     * Підтримує пошук за кількома термінами (через кому або пробіл)
      */
     fun searchRecipes(recipes: List<Recipe>, query: String) {
         viewModelScope.launch {
@@ -98,6 +99,7 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
 
     /**
      * Пошук за інгредієнтами (лінійний пошук)
+     * Підтримує пошук за кількома інгредієнтами (через кому або пробіл)
      */
     fun searchByIngredients(recipes: List<Recipe>, ingredient: String) {
         viewModelScope.launch {

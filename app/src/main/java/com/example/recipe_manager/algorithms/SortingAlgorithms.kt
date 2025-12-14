@@ -5,13 +5,13 @@ import com.example.recipe_manager.model.Recipe
 object SortingAlgorithms {
 
     enum class SortType {
-        NAME, TIME, DIFFICULTY, DATE
+        NAME, TIME_ASC, DIFFICULTY, DATE
     }
 
     fun sortRecipes(recipes: MutableList<Recipe>, sortType: SortType) {
         when (sortType) {
             SortType.NAME -> quickSortByName(recipes)
-            SortType.TIME -> quickSortByTime(recipes)
+            SortType.TIME_ASC -> quickSortByTimeAsc(recipes)
             SortType.DIFFICULTY -> quickSortByDifficulty(recipes)
             SortType.DATE -> quickSortByDate(recipes)
         }
@@ -38,19 +38,35 @@ object SortingAlgorithms {
         return i + 1
     }
 
-    fun quickSortByTime(recipes: MutableList<Recipe>, low: Int = 0, high: Int = recipes.size - 1) {
+    /**
+     * Сортування за часом по зростанню (від найшвидших до найдовших)
+     */
+    fun quickSortByTimeAsc(recipes: MutableList<Recipe>, low: Int = 0, high: Int = recipes.size - 1) {
         if (low < high) {
-            val pi = partitionByTime(recipes, low, high)
-            quickSortByTime(recipes, low, pi - 1)
-            quickSortByTime(recipes, pi + 1, high)
+            val pi = partitionByTimeAsc(recipes, low, high)
+            quickSortByTimeAsc(recipes, low, pi - 1)
+            quickSortByTimeAsc(recipes, pi + 1, high)
         }
     }
 
-    private fun partitionByTime(recipes: MutableList<Recipe>, low: Int, high: Int): Int {
+    private fun partitionByTimeAsc(recipes: MutableList<Recipe>, low: Int, high: Int): Int {
         val pivot = recipes[high].cookingTime
         var i = low - 1
         for (j in low until high) {
             if (recipes[j].cookingTime <= pivot) {
+                i++
+                swap(recipes, i, j)
+            }
+        }
+        swap(recipes, i + 1, high)
+        return i + 1
+    }
+
+    private fun partitionByTimeDesc(recipes: MutableList<Recipe>, low: Int, high: Int): Int {
+        val pivot = recipes[high].cookingTime
+        var i = low - 1
+        for (j in low until high) {
+            if (recipes[j].cookingTime >= pivot) {
                 i++
                 swap(recipes, i, j)
             }

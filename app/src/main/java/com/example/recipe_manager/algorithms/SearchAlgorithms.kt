@@ -6,25 +6,57 @@ object SearchAlgorithms {
 
     /**
      * Лінійний пошук - використовується для пошуку рецептів за інгредієнтами
-     * Перевіряє кожен рецепт у списку, чи містить він шуканий інгредієнт
+     * Тепер підтримує пошук за кількома інгредієнтами (через кому або пробіл)
      * Складність: O(n)
      */
     fun linearSearchByIngredients(recipes: List<Recipe>, searchIngredient: String): List<Recipe> {
         val results = mutableListOf<Recipe>()
-        val searchLower = searchIngredient.lowercase().trim()
+
+        // Розбиваємо пошуковий запит на окремі інгредієнти
+        val searchIngredients = parseSearchQuery(searchIngredient)
+
+        if (searchIngredients.isEmpty()) {
+            return results
+        }
 
         // Проходимо по кожному рецепту
         for (recipe in recipes) {
-            // Перевіряємо кожен інгредієнт у рецепті
-            for (ingredient in recipe.ingredients) {
-                if (ingredient.lowercase().contains(searchLower)) {
-                    results.add(recipe)
-                    break // Знайдено збіг, переходимо до наступного рецепту
+            var allFound = true
+
+            // Перевіряємо чи містить рецепт ВСІ шукані інгредієнти
+            for (searchItem in searchIngredients) {
+                var foundInRecipe = false
+
+                for (ingredient in recipe.ingredients) {
+                    if (ingredient.lowercase().contains(searchItem)) {
+                        foundInRecipe = true
+                        break
+                    }
                 }
+
+                if (!foundInRecipe) {
+                    allFound = false
+                    break
+                }
+            }
+
+            if (allFound) {
+                results.add(recipe)
             }
         }
 
         return results
+    }
+
+    /**
+     * Розбиває пошуковий запит на окремі терміни
+     * Підтримує розділення через кому та пробіли
+     */
+    private fun parseSearchQuery(query: String): List<String> {
+        return query
+            .split(",", " ")
+            .map { it.trim().lowercase() }
+            .filter { it.isNotEmpty() }
     }
 
     /**
@@ -95,6 +127,7 @@ object SearchAlgorithms {
 
     /**
      * Комплексний пошук - шукає за назвою, інгредієнтами та складністю одночасно
+     * Знаходить рецепти які містять ВСІ шукані терміни
      */
     fun complexSearch(
         recipes: List<Recipe>,
@@ -103,39 +136,55 @@ object SearchAlgorithms {
         searchByName: Boolean = true,
         searchByDifficulty: Boolean = true
     ): List<Recipe> {
-        val results = mutableSetOf<Recipe>() // Set для уникнення дублікатів
-        val searchLower = searchQuery.lowercase().trim()
+        val results = mutableListOf<Recipe>()
+        val searchTerms = parseSearchQuery(searchQuery)
+
+        if (searchTerms.isEmpty()) {
+            return emptyList()
+        }
 
         for (recipe in recipes) {
-            var found = false
+            var allTermsFound = true
 
-            // Пошук за назвою
-            if (searchByName && recipe.name.lowercase().contains(searchLower)) {
-                found = true
-            }
+            // Перевіряємо чи присутні ВСІ терміни в рецепті
+            for (term in searchTerms) {
+                var termFound = false
 
-            // Пошук за інгредієнтами
-            if (searchByIngredients && !found) {
-                for (ingredient in recipe.ingredients) {
-                    if (ingredient.lowercase().contains(searchLower)) {
-                        found = true
-                        break
+                // Пошук за назвою
+                if (searchByName && recipe.name.lowercase().contains(term)) {
+                    termFound = true
+                }
+
+                // Пошук за інгредієнтами
+                if (searchByIngredients && !termFound) {
+                    for (ingredient in recipe.ingredients) {
+                        if (ingredient.lowercase().contains(term)) {
+                            termFound = true
+                            break
+                        }
                     }
                 }
-            }
 
-            // Пошук за складністю
-            if (searchByDifficulty && !found) {
-                if (recipe.difficulty.lowercase().contains(searchLower)) {
-                    found = true
+                // Пошук за складністю
+                if (searchByDifficulty && !termFound) {
+                    if (recipe.difficulty.lowercase().contains(term)) {
+                        termFound = true
+                    }
+                }
+
+                // Якщо термін не знайдено, то цей рецепт не підходить
+                if (!termFound) {
+                    allTermsFound = false
+                    break
                 }
             }
 
-            if (found) {
+            // Додаємо рецепт лише якщо знайдено ВСІ терміни
+            if (allTermsFound) {
                 results.add(recipe)
             }
         }
 
-        return results.toList()
+        return results
     }
 }

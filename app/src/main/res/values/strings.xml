@@ -41,10 +41,10 @@
 
     <!-- Search -->
     <string name="search_title">Пошук рецептів</string>
-    <string name="search_hint">Введіть назву, інгредієнт або складність</string>
+    <string name="search_hint">Введіть назву, інгредієнти через кому або пробіл</string>
     <string name="search">Шукати</string>
     <string name="no_results">Нічого не знайдено</string>
-    <string name="search_by_name">Пошук за назвою  </string>
+    <string name="search_by_name">Пошук за назвою</string>
     <string name="search_by_ingredients">Пошук за інгредієнтами</string>
     <string name="search_complex">Комплексний пошук</string>
 
@@ -52,6 +52,7 @@
     <string name="sort_by">Сортувати за:</string>
     <string name="sort_by_name">За назвою</string>
     <string name="sort_by_time">За часом</string>
+    <string name="sort_by_time_asc">За часом</string>
     <string name="sort_by_difficulty">За складністю</string>
     <string name="sort_by_date">За датою додавання</string>
 
