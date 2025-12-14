@@ -16,7 +16,6 @@ import com.example.recipe_manager.ui.add.AddRecipeActivity
 import com.example.recipe_manager.ui.detail.RecipeDetailActivity
 import com.example.recipe_manager.ui.search.SearchActivity
 import com.example.recipe_manager.viewmodel.RecipeViewModel
-import com.google.android.material.floatingactionbutton.FloatingActionButton
 import android.widget.TextView
 
 class MainActivity : AppCompatActivity() {
@@ -25,7 +24,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: RecipeAdapter
     private lateinit var recyclerView: RecyclerView
     private lateinit var emptyTextView: TextView
-    private lateinit var fabAdd: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         // Ініціалізація UI
         recyclerView = findViewById(R.id.recyclerView)
         emptyTextView = findViewById(R.id.emptyTextView)
-        fabAdd = findViewById(R.id.fabAdd)
 
         // Налаштування RecyclerView
         adapter = RecipeAdapter { recipe ->
@@ -64,12 +61,6 @@ class MainActivity : AppCompatActivity() {
             if (recipes.isNotEmpty()) {
                 adapter.submitList(recipes)
             }
-        }
-
-        // FAB для додавання рецепту
-        fabAdd.setOnClickListener {
-            val intent = Intent(this, AddRecipeActivity::class.java)
-            startActivity(intent)
         }
     }
 
