@@ -94,10 +94,6 @@ class MainActivity : AppCompatActivity() {
                 sortRecipes(SortingAlgorithms.SortType.NAME)
                 true
             }
-            R.id.sort_by_time -> {
-                sortRecipes(SortingAlgorithms.SortType.TIME)
-                true
-            }
             R.id.sort_by_difficulty -> {
                 sortRecipes(SortingAlgorithms.SortType.DIFFICULTY)
                 true

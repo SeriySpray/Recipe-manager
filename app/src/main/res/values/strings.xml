@@ -44,7 +44,7 @@
     <string name="search_hint">Введіть назву, інгредієнт або складність</string>
     <string name="search">Шукати</string>
     <string name="no_results">Нічого не знайдено</string>
-    <string name="search_by_name">Пошук за назвою (точний)</string>
+    <string name="search_by_name">Пошук за назвою  </string>
     <string name="search_by_ingredients">Пошук за інгредієнтами</string>
     <string name="search_complex">Комплексний пошук</string>
 

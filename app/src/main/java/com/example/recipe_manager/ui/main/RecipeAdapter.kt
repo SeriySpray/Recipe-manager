@@ -11,6 +11,8 @@ import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.recipe_manager.R
 import com.example.recipe_manager.model.Recipe
+import java.text.SimpleDateFormat
+import java.util.*
 
 class RecipeAdapter(
     private val onItemClick: (Recipe) -> Unit
@@ -35,6 +37,7 @@ class RecipeAdapter(
         private val ingredientsPreviewTextView: TextView = itemView.findViewById(R.id.ingredientsPreviewTextView)
         private val difficultyBadge: TextView = itemView.findViewById(R.id.difficultyBadge)
         private val cookingTimeTextView: TextView = itemView.findViewById(R.id.cookingTimeTextView)
+        private val dateCreatedTextView: TextView = itemView.findViewById(R.id.dateCreatedTextView)
 
         fun bind(recipe: Recipe) {
             nameTextView.text = recipe.name
@@ -66,6 +69,11 @@ class RecipeAdapter(
 
             // Час приготування
             cookingTimeTextView.text = "${recipe.cookingTime} хв"
+
+            // Дата додавання
+            val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
+            val dateString = dateFormat.format(Date(recipe.dateCreated))
+            dateCreatedTextView.text = dateString
 
             // Клік на картку
             itemView.setOnClickListener {

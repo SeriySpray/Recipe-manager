@@ -52,6 +52,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:orientation="horizontal"
+            android:gravity="center_vertical"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/ingredientsPreviewTextView">
@@ -68,6 +69,15 @@
                 android:background="@drawable/difficulty_badge_background"
                 tools:text="Середній"
                 tools:backgroundTint="@color/difficulty_medium" />
+
+            <TextView
+                android:id="@+id/dateCreatedTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:textColor="@color/text_secondary"
+                android:textSize="12sp"
+                tools:text="14.12.2025" />
 
             <View
                 android:layout_width="0dp"

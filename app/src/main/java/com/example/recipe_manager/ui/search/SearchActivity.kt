@@ -114,14 +114,9 @@ class SearchActivity : AppCompatActivity() {
                 viewModel.searchRecipes(allRecipes, query)
             }
             chipSearchName.isChecked -> {
-                // Бінарний пошук за точною назвою
-                // Якщо користувач вводить точну назву
-                if (query.length > 3) {
-                    viewModel.searchByNameBinary(allRecipes, query)
-                } else {
-                    // Для коротких запитів використовуємо частковий пошук
-                    viewModel.searchByPartialName(allRecipes, query)
-                }
+                // Бінарний пошук за ТОЧНОЮ назвою
+                // Видаляємо умову з довжиною - завжди використовуємо бінарний пошук
+                viewModel.searchByNameBinary(allRecipes, query)
             }
             chipSearchIngredients.isChecked -> {
                 // Лінійний пошук за інгредієнтами
