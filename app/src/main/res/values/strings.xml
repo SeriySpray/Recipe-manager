@@ -71,4 +71,7 @@
     <!-- Success messages -->
     <string name="recipe_added">Рецепт додано</string>
     <string name="recipe_updated">Рецепт оновлено</string>
+
+    <!-- Cooking status -->
+    <string name="times_cooked_label">Кількість приготувань:</string>
 </resources>

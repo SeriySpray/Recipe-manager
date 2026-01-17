@@ -150,4 +150,26 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     fun clearSearchResults() {
         _searchResults.value = emptyList()
     }
+
+    /**
+     * Відмітити рецепт як приготований
+     */
+    fun markRecipeAsCooked(recipe: Recipe) = viewModelScope.launch {
+        val updatedRecipe = recipe.copy(
+            timesCooked = recipe.timesCooked + 1,
+            wasCooked = true
+        )
+        repository.update(updatedRecipe)
+    }
+
+    /**
+     * Скинути лічильник приготування
+     */
+    fun resetCookingCounter(recipe: Recipe) = viewModelScope.launch {
+        val updatedRecipe = recipe.copy(
+            timesCooked = 0,
+            wasCooked = false
+        )
+        repository.update(updatedRecipe)
+    }
 }

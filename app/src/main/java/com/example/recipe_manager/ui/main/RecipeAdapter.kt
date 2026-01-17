@@ -38,6 +38,7 @@ class RecipeAdapter(
         private val difficultyBadge: TextView = itemView.findViewById(R.id.difficultyBadge)
         private val cookingTimeTextView: TextView = itemView.findViewById(R.id.cookingTimeTextView)
         private val dateCreatedTextView: TextView = itemView.findViewById(R.id.dateCreatedTextView)
+        private val cookedBadge: TextView = itemView.findViewById(R.id.cookedBadge)
 
         fun bind(recipe: Recipe) {
             nameTextView.text = recipe.name
@@ -74,6 +75,14 @@ class RecipeAdapter(
             val dateFormat = SimpleDateFormat("dd.MM.yyyy", Locale.getDefault())
             val dateString = dateFormat.format(Date(recipe.dateCreated))
             dateCreatedTextView.text = dateString
+
+            // Відображення бейджа з кількістю приготувань
+            if (recipe.wasCooked && recipe.timesCooked > 0) {
+                cookedBadge.visibility = View.VISIBLE
+                cookedBadge.text = "✓ ${recipe.timesCooked}"
+            } else {
+                cookedBadge.visibility = View.GONE
+            }
 
             // Клік на картку
             itemView.setOnClickListener {

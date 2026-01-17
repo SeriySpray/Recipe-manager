@@ -17,7 +17,9 @@ data class Recipe(
     val difficulty: String, // "Легкий", "Середній", "Складний"
     val cookingTime: Int, // час у хвилинах
     val instructions: String,
-    val dateCreated: Long = System.currentTimeMillis()
+    val dateCreated: Long = System.currentTimeMillis(),
+    val timesCooked: Int = 0, // кількість разів приготування
+    val wasCooked: Boolean = false // чи був приготований хоча б раз
 ) {
     companion object {
         const val DIFFICULTY_EASY = "Легкий"

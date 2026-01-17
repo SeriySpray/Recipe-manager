@@ -15,7 +15,7 @@ import com.example.recipe_manager.model.Converters
 import com.example.recipe_manager.model.Recipe
 import kotlinx.coroutines.flow.Flow
 
-@Database(entities = [Recipe::class], version = 1, exportSchema = false)
+@Database(entities = [Recipe::class], version = 2, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class RecipeDatabase : RoomDatabase() {
 

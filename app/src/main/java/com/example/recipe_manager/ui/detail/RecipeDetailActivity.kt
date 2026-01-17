@@ -28,6 +28,9 @@ class RecipeDetailActivity : AppCompatActivity() {
     private lateinit var instructionsTextView: TextView
     private lateinit var editButton: Button
     private lateinit var deleteButton: Button
+    private lateinit var cookingCounterTextView: TextView
+    private lateinit var incrementButton: TextView
+    private lateinit var decrementButton: TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,6 +47,9 @@ class RecipeDetailActivity : AppCompatActivity() {
         instructionsTextView = findViewById(R.id.instructionsTextView)
         editButton = findViewById(R.id.editButton)
         deleteButton = findViewById(R.id.deleteButton)
+        cookingCounterTextView = findViewById(R.id.cookingCounterTextView)
+        incrementButton = findViewById(R.id.incrementButton)
+        decrementButton = findViewById(R.id.decrementButton)
 
         // Додаємо відступ зверху ПІСЛЯ ініціалізації UI
         addTopPadding()
@@ -74,6 +80,35 @@ class RecipeDetailActivity : AppCompatActivity() {
         // Кнопка видалення
         deleteButton.setOnClickListener {
             showDeleteConfirmationDialog()
+        }
+
+        // Кнопка збільшення лічильника
+        incrementButton.setOnClickListener {
+            currentRecipe?.let { recipe ->
+                val updatedRecipe = recipe.copy(
+                    timesCooked = recipe.timesCooked + 1,
+                    wasCooked = true
+                )
+                viewModel.update(updatedRecipe)
+                currentRecipe = updatedRecipe
+                updateCookingCounter(updatedRecipe)
+            }
+        }
+
+        // Кнопка зменшення лічильника
+        decrementButton.setOnClickListener {
+            currentRecipe?.let { recipe ->
+                if (recipe.timesCooked > 0) {
+                    val newCount = recipe.timesCooked - 1
+                    val updatedRecipe = recipe.copy(
+                        timesCooked = newCount,
+                        wasCooked = newCount > 0
+                    )
+                    viewModel.update(updatedRecipe)
+                    currentRecipe = updatedRecipe
+                    updateCookingCounter(updatedRecipe)
+                }
+            }
         }
     }
 
@@ -133,6 +168,13 @@ class RecipeDetailActivity : AppCompatActivity() {
         ingredientsTextView.text = ingredientsFormatted
 
         instructionsTextView.text = recipe.instructions
+
+        // Відображення лічильника приготувань
+        updateCookingCounter(recipe)
+    }
+
+    private fun updateCookingCounter(recipe: Recipe) {
+        cookingCounterTextView.text = recipe.timesCooked.toString()
     }
 
     private fun showDeleteConfirmationDialog() {

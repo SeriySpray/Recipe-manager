@@ -97,7 +97,7 @@
         </LinearLayout>
 
         <View
-            android:id="@+id/divider1"
+            android:id="@+id/divider0"
             android:layout_width="0dp"
             android:layout_height="1dp"
             android:layout_marginTop="24dp"
@@ -105,6 +105,73 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/infoLayout" />
+
+        <LinearLayout
+            android:id="@+id/cookingCounterLayout"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/divider0">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/times_cooked_label"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/decrementButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="−"
+                android:textColor="@color/text_primary"
+                android:textSize="24sp"
+                android:clickable="true"
+                android:focusable="true" />
+
+            <TextView
+                android:id="@+id/cookingCounterTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="16dp"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:minWidth="30dp"
+                android:gravity="center"
+                tools:text="5" />
+
+            <TextView
+                android:id="@+id/incrementButton"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:gravity="center"
+                android:text="+"
+                android:textColor="@color/text_primary"
+                android:textSize="24sp"
+                android:clickable="true"
+                android:focusable="true" />
+
+        </LinearLayout>
+
+        <View
+            android:id="@+id/divider1"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:layout_marginTop="24dp"
+            android:background="@color/divider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cookingCounterLayout" />
 
         <TextView
             android:id="@+id/ingredientsTitleTextView"

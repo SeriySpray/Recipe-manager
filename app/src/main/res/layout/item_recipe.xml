@@ -71,6 +71,22 @@
                 tools:backgroundTint="@color/difficulty_medium" />
 
             <TextView
+                android:id="@+id/cookedBadge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:textColor="@color/white"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:text="✓ Готував"
+                android:background="@drawable/difficulty_badge_background"
+                android:backgroundTint="@color/difficulty_easy"
+                android:visibility="gone"
+                tools:visibility="visible" />
+
+            <TextView
                 android:id="@+id/dateCreatedTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
