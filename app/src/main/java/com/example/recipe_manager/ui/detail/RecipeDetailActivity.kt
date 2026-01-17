@@ -7,6 +7,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.ScrollView
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
 import com.example.recipe_manager.R
@@ -44,6 +45,9 @@ class RecipeDetailActivity : AppCompatActivity() {
         editButton = findViewById(R.id.editButton)
         deleteButton = findViewById(R.id.deleteButton)
 
+        // Додаємо відступ зверху ПІСЛЯ ініціалізації UI
+        addTopPadding()
+
         // Ініціалізація ViewModel
         viewModel = ViewModelProvider(this)[RecipeViewModel::class.java]
 
@@ -71,6 +75,29 @@ class RecipeDetailActivity : AppCompatActivity() {
         deleteButton.setOnClickListener {
             showDeleteConfirmationDialog()
         }
+    }
+
+    private fun addTopPadding() {
+        // Отримуємо висоту ActionBar
+        val actionBarHeight = supportActionBar?.height ?: 0
+
+        val actionBarSize = if (actionBarHeight > 0) {
+            actionBarHeight
+        } else {
+            val styledAttributes = theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
+            val size = styledAttributes.getDimension(0, 0f).toInt()
+            styledAttributes.recycle()
+            size
+        }
+
+        // Знаходимо ScrollView і додаємо padding
+        val scrollView = findViewById<ScrollView>(R.id.scrollView)
+        scrollView?.setPadding(
+            scrollView.paddingLeft,
+            scrollView.paddingTop + actionBarSize,
+            scrollView.paddingRight,
+            scrollView.paddingBottom
+        )
     }
 
     override fun onResume() {

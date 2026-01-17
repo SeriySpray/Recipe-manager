@@ -5,6 +5,7 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.ScrollView
 import androidx.lifecycle.ViewModelProvider
 import com.example.recipe_manager.R
 import com.example.recipe_manager.model.Recipe
@@ -33,6 +34,9 @@ class AddRecipeActivity : AppCompatActivity() {
         supportActionBar?.title = getString(R.string.add_recipe_title)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        // Додаємо відступ зверху
+        addTopPadding()
+
         // Ініціалізація UI
         nameEditText = findViewById(R.id.nameEditText)
         ingredientsEditText = findViewById(R.id.ingredientsEditText)
@@ -56,6 +60,29 @@ class AddRecipeActivity : AppCompatActivity() {
         cancelButton.setOnClickListener {
             finish()
         }
+    }
+
+    private fun addTopPadding() {
+        // Отримуємо висоту ActionBar
+        val actionBarHeight = supportActionBar?.height ?: 0
+
+        val actionBarSize = if (actionBarHeight > 0) {
+            actionBarHeight
+        } else {
+            val styledAttributes = theme.obtainStyledAttributes(intArrayOf(android.R.attr.actionBarSize))
+            val size = styledAttributes.getDimension(0, 0f).toInt()
+            styledAttributes.recycle()
+            size
+        }
+
+        // Знаходимо ScrollView і додаємо padding
+        val scrollView = findViewById<ScrollView>(R.id.scrollView)
+        scrollView?.setPadding(
+            scrollView.paddingLeft,
+            scrollView.paddingTop + actionBarSize,
+            scrollView.paddingRight,
+            scrollView.paddingBottom
+        )
     }
 
     private fun saveRecipe() {
