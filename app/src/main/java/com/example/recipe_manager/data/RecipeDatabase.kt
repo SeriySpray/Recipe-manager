@@ -13,13 +13,15 @@ import androidx.room.Delete
 import androidx.room.OnConflictStrategy
 import com.example.recipe_manager.model.Converters
 import com.example.recipe_manager.model.Recipe
+import com.example.recipe_manager.model.Folder
 import kotlinx.coroutines.flow.Flow
 
-@Database(entities = [Recipe::class], version = 2, exportSchema = false)
+@Database(entities = [Recipe::class, Folder::class], version = 3, exportSchema = false)
 @TypeConverters(Converters::class)
 abstract class RecipeDatabase : RoomDatabase() {
 
     abstract fun recipeDao(): RecipeDao
+    abstract fun folderDao(): FolderDao
 
     companion object {
         @Volatile
@@ -73,4 +75,29 @@ interface RecipeDao {
 
     @Query("SELECT * FROM recipes ORDER BY name ASC")
     fun getAllRecipesSortedByName(): Flow<List<Recipe>>
+
+    @Query("SELECT * FROM recipes WHERE folderId = :folderId ORDER BY dateCreated DESC")
+    fun getRecipesByFolder(folderId: Long): Flow<List<Recipe>>
+}
+
+@Dao
+interface FolderDao {
+
+    @Query("SELECT * FROM folders ORDER BY dateCreated ASC")
+    fun getAllFolders(): Flow<List<Folder>>
+
+    @Query("SELECT * FROM folders WHERE id = :id")
+    suspend fun getFolderById(id: Long): Folder?
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insert(folder: Folder): Long
+
+    @Update
+    suspend fun update(folder: Folder)
+
+    @Delete
+    suspend fun delete(folder: Folder)
+
+    @Query("SELECT COUNT(*) FROM folders")
+    suspend fun getFolderCount(): Int
 }

@@ -1,11 +1,16 @@
 package com.example.recipe_manager.data
 
 import com.example.recipe_manager.model.Recipe
+import com.example.recipe_manager.model.Folder
 import kotlinx.coroutines.flow.Flow
 
-class RecipeRepository(private val recipeDao: RecipeDao) {
+class RecipeRepository(
+    private val recipeDao: RecipeDao,
+    private val folderDao: FolderDao
+) {
 
     val allRecipes: Flow<List<Recipe>> = recipeDao.getAllRecipes()
+    val allFolders: Flow<List<Folder>> = folderDao.getAllFolders()
 
     suspend fun insert(recipe: Recipe): Long {
         return recipeDao.insert(recipe)
@@ -41,5 +46,41 @@ class RecipeRepository(private val recipeDao: RecipeDao) {
 
     suspend fun deleteAll() {
         recipeDao.deleteAll()
+    }
+
+    fun getRecipesByFolder(folderId: Long): Flow<List<Recipe>> {
+        return recipeDao.getRecipesByFolder(folderId)
+    }
+
+    // Методи для папок
+    suspend fun insertFolder(folder: Folder): Long {
+        return folderDao.insert(folder)
+    }
+
+    suspend fun updateFolder(folder: Folder) {
+        folderDao.update(folder)
+    }
+
+    suspend fun deleteFolder(folder: Folder) {
+        folderDao.delete(folder)
+    }
+
+    suspend fun getFolderById(id: Long): Folder? {
+        return folderDao.getFolderById(id)
+    }
+
+    suspend fun getFolderCount(): Int {
+        return folderDao.getFolderCount()
+    }
+
+    suspend fun createDefaultFolderIfNeeded() {
+        if (getFolderCount() == 0) {
+            insertFolder(
+                Folder(
+                    id = Folder.DEFAULT_FOLDER_ID,
+                    name = Folder.DEFAULT_FOLDER_NAME
+                )
+            )
+        }
     }
 }

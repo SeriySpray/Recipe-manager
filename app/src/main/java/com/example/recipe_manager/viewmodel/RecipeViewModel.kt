@@ -11,12 +11,14 @@ import com.example.recipe_manager.algorithms.SortingAlgorithms
 import com.example.recipe_manager.data.RecipeDatabase
 import com.example.recipe_manager.data.RecipeRepository
 import com.example.recipe_manager.model.Recipe
+import com.example.recipe_manager.model.Folder
 import kotlinx.coroutines.launch
 
 class RecipeViewModel(application: Application) : AndroidViewModel(application) {
 
     private val repository: RecipeRepository
     val allRecipes: LiveData<List<Recipe>>
+    val allFolders: LiveData<List<Folder>>
 
     private val _sortedRecipes = MutableLiveData<List<Recipe>>()
     val sortedRecipes: LiveData<List<Recipe>> = _sortedRecipes
@@ -28,10 +30,18 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
     val currentSortType: LiveData<SortingAlgorithms.SortType> = _currentSortType
 
     init {
-        val recipeDao = RecipeDatabase.getDatabase(application).recipeDao()
-        repository = RecipeRepository(recipeDao)
+        val database = RecipeDatabase.getDatabase(application)
+        val recipeDao = database.recipeDao()
+        val folderDao = database.folderDao()
+        repository = RecipeRepository(recipeDao, folderDao)
         allRecipes = repository.allRecipes.asLiveData()
+        allFolders = repository.allFolders.asLiveData()
         _currentSortType.value = SortingAlgorithms.SortType.DATE
+        
+        // Створити початкову папку при першому запуску
+        viewModelScope.launch {
+            repository.createDefaultFolderIfNeeded()
+        }
     }
 
     // CRUD операції
@@ -171,5 +181,32 @@ class RecipeViewModel(application: Application) : AndroidViewModel(application) 
             wasCooked = false
         )
         repository.update(updatedRecipe)
+    }
+
+    // Методи для роботи з папками
+
+    fun getRecipesByFolder(folderId: Long): LiveData<List<Recipe>> {
+        return repository.getRecipesByFolder(folderId).asLiveData()
+    }
+
+    fun insertFolder(folder: Folder) = viewModelScope.launch {
+        repository.insertFolder(folder)
+    }
+
+    fun updateFolder(folder: Folder) = viewModelScope.launch {
+        repository.updateFolder(folder)
+    }
+
+    fun deleteFolder(folder: Folder) = viewModelScope.launch {
+        repository.deleteFolder(folder)
+    }
+
+    suspend fun getFolderById(id: Long): Folder? {
+        return repository.getFolderById(id)
+    }
+
+    fun toggleFolderExpanded(folder: Folder) = viewModelScope.launch {
+        val updatedFolder = folder.copy(isExpanded = !folder.isExpanded)
+        repository.updateFolder(updatedFolder)
     }
 }

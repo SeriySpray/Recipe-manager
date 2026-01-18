@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="280dp"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/dialog_background"
+    android:padding="12dp">
+
+    <!-- Title -->
+    <TextView
+        android:id="@+id/dialogTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/menu_sort"
+        android:textColor="#B3FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:paddingBottom="10dp" />
+
+    <!-- Sort Options -->
+    <TextView
+        android:id="@+id/sortByName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sort_by_name"
+        android:textColor="#B3FFFFFF"
+        android:textSize="14sp"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="12dp"
+        android:background="?attr/selectableItemBackground" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#33FFFFFF" />
+
+    <TextView
+        android:id="@+id/sortByTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sort_by_time_asc"
+        android:textColor="#B3FFFFFF"
+        android:textSize="14sp"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="12dp"
+        android:background="?attr/selectableItemBackground" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#33FFFFFF" />
+
+    <TextView
+        android:id="@+id/sortByDifficulty"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sort_by_difficulty"
+        android:textColor="#B3FFFFFF"
+        android:textSize="14sp"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="12dp"
+        android:background="?attr/selectableItemBackground" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#33FFFFFF" />
+
+    <TextView
+        android:id="@+id/sortByDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/sort_by_date"
+        android:textColor="#B3FFFFFF"
+        android:textSize="14sp"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="12dp"
+        android:background="?attr/selectableItemBackground" />
+
+    <!-- Cancel Button -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="end"
+        android:paddingTop="8dp">
+
+        <Button
+            android:id="@+id/cancelButton"
+            style="@style/CustomDialogButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@android:string/cancel"
+            android:background="?attr/selectableItemBackground"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom Dialog Theme -->
+    <style name="CustomDialogTheme" parent="Theme.AppCompat.Dialog.Alert">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:background">@drawable/dialog_background</item>
+        <item name="android:textColorPrimary">#B3FFFFFF</item>
+        <item name="android:textColor">#B3FFFFFF</item>
+        <item name="colorAccent">#B3FFFFFF</item>
+        <item name="buttonBarNegativeButtonStyle">@style/CustomDialogButton</item>
+        <item name="buttonBarPositiveButtonStyle">@style/CustomDialogButton</item>
+    </style>
+
+    <!-- Dialog Button Style -->
+    <style name="CustomDialogButton" parent="Widget.AppCompat.Button.ButtonBar.AlertDialog">
+        <item name="android:textColor">#B3FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+    
+    <!-- EditText for dialogs -->
+    <style name="CustomDialogEditText">
+        <item name="android:textColor">#B3FFFFFF</item>
+        <item name="android:textColorHint">#66FFFFFF</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:background">@drawable/edit_text_background</item>
+        <item name="android:padding">12dp</item>
+    </style>
+</resources>

@@ -19,7 +19,8 @@ data class Recipe(
     val instructions: String,
     val dateCreated: Long = System.currentTimeMillis(),
     val timesCooked: Int = 0, // кількість разів приготування
-    val wasCooked: Boolean = false // чи був приготований хоча б раз
+    val wasCooked: Boolean = false, // чи був приготований хоча б раз
+    val folderId: Long = 1L // ID папки (за замовчуванням "Ваші рецепти")
 ) {
     companion object {
         const val DIFFICULTY_EASY = "Легкий"

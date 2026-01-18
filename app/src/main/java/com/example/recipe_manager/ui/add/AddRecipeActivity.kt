@@ -25,10 +25,15 @@ class AddRecipeActivity : AppCompatActivity() {
     private lateinit var hardRadioButton: RadioButton
     private lateinit var saveButton: Button
     private lateinit var cancelButton: Button
+    
+    private var folderId: Long = 1L // За замовчуванням - стандартна папка
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_recipe)
+        
+        // Отримати ID папки з Intent
+        folderId = intent.getLongExtra("FOLDER_ID", 1L)
 
         // Налаштування ActionBar
         supportActionBar?.title = getString(R.string.add_recipe_title)
@@ -142,7 +147,8 @@ class AddRecipeActivity : AppCompatActivity() {
             ingredients = ingredients,
             difficulty = difficulty,
             cookingTime = cookingTime,
-            instructions = instructions
+            instructions = instructions,
+            folderId = folderId
         )
 
         // Збереження в базу даних

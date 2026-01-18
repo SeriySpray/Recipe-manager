@@ -75,15 +75,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:paddingHorizontal="12dp"
+                android:paddingHorizontal="8dp"
                 android:paddingVertical="4dp"
-                android:textColor="@color/white"
+                android:textColor="@color/text_primary"
                 android:textSize="12sp"
-                android:textStyle="bold"
-                android:text="✓ Готував"
-                android:background="@drawable/difficulty_badge_background"
-                android:backgroundTint="@color/difficulty_easy"
+                android:drawablePadding="4dp"
+                app:drawableStartCompat="@drawable/ic_pot"
+                app:drawableTint="@color/text_primary"
+                android:background="@drawable/cooked_badge_background"
                 android:visibility="gone"
+                tools:text="5"
                 tools:visibility="visible" />
 
             <TextView

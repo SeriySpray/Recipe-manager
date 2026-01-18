@@ -76,10 +76,10 @@ class RecipeAdapter(
             val dateString = dateFormat.format(Date(recipe.dateCreated))
             dateCreatedTextView.text = dateString
 
-            // Відображення бейджа з кількістю приготувань
+            // Відображення бейджа з кількістю приготувань (мінімалістична каструлька)
             if (recipe.wasCooked && recipe.timesCooked > 0) {
                 cookedBadge.visibility = View.VISIBLE
-                cookedBadge.text = "✓ ${recipe.timesCooked}"
+                cookedBadge.text = "${recipe.timesCooked}"
             } else {
                 cookedBadge.visibility = View.GONE
             }

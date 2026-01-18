@@ -7,7 +7,7 @@
     <string name="menu_sort">Сортувати</string>
 
     <!-- Main Activity -->
-    <string name="no_recipes">Немає рецептів. Додайте свій перший рецепт!</string>
+    <string name="no_recipes">Немає папок. Створіть першу папку!</string>
     <string name="recipe_deleted">Рецепт видалено</string>
 
     <!-- Add/Edit Recipe -->
@@ -74,4 +74,21 @@
 
     <!-- Cooking status -->
     <string name="times_cooked_label">Кількість приготувань:</string>
+
+    <!-- Folders -->
+    <string name="folder_menu">Меню папки</string>
+    <string name="create_folder">Створити папку</string>
+    <string name="rename_folder">Перейменувати</string>
+    <string name="delete_folder">Видалити</string>
+    <string name="folder_name">Назва папки</string>
+    <string name="folder_name_hint">Введіть назву папки</string>
+    <string name="folder_created">Папку створено</string>
+    <string name="folder_updated">Папку оновлено</string>
+    <string name="folder_deleted">Папку видалено</string>
+    <string name="delete_folder_confirmation">Видалити папку \"%s\"?</string>
+    <string name="delete_folder_warning">Всі рецепти з цієї папки будуть видалені!</string>
+    <string name="folder_name_required">Введіть назву папки</string>
+    <string name="add_recipe_to_folder">Додати рецепт до папки</string>
+    <string name="select_folder">Виберіть папку</string>
+    <string name="create_folder_first">Спочатку створіть папку</string>
 </resources>
